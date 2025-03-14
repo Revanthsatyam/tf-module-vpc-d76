@@ -3,13 +3,13 @@ resource "aws_vpc" "main" {
   tags       = merge(local.tags, { Name = "${var.env}-vpc" })
 }
 
-#subnets = var.subnets
+resource "aws_subnet" "main" {
+  vpc_id = aws_vpc.main.id
 
-# resource "aws_subnet" "main" {
-#   vpc_id     = aws_vpc.main.id
-#
-#   for_each = var.subnets
-#   cidr_block = "10.0.1.0/24"
-#
-#   tags = merge(local.tags, { Name = "${var.env}-subnet" })
-# }
+  for_each          = var.subnets
+  subnets           = each.value
+  #cidr_block        = "10.0.1.0/24"
+  #availability_zone = ""
+
+  tags = merge(local.tags, { Name = "${var.env}-subnet" })
+}
