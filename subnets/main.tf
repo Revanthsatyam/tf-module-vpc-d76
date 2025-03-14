@@ -7,9 +7,15 @@ resource "aws_subnet" "main" {
   tags = merge(var.tags, { Name = "${var.env}-${each.key}-subnet" })
 }
 
-resource "aws_route_table" "example" {
+resource "aws_route_table" "main" {
   for_each = var.subnets
   vpc_id   = var.vpc_id
 
   tags = merge(var.tags, { Name = "${var.env}-${each.key}-RT" })
+}
+
+resource "aws_route_table_association" "main" {
+  for_each       = var.subnets
+  subnet_id      = aws_subnet.main.id
+  route_table_id = aws_route_table.main.id
 }
