@@ -3,7 +3,7 @@ resource "aws_vpc" "main" {
   tags       = merge(local.tags, { Name = "${var.env}-vpc" })
 }
 
-subnets = var.subnets
+#subnets = var.subnets
 
 # resource "aws_subnet" "main" {
 #   vpc_id     = aws_vpc.main.id
