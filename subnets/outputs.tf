@@ -1,5 +1,5 @@
 output "subnet" {
-  value = aws_subnet.main
+  value = lookup(aws_subnet.main, subnet, null)
 }
 
 # output "route_table" {
