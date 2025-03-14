@@ -1,3 +1,3 @@
 output "subnet" {
-  value = aws_subnet.main.subnets
+  value = var.subnets
 }
