@@ -1,3 +1,3 @@
 locals {
-  tags = merge(var.tags, name = "${var.env}-vpc")
+  tags = merge(var.tags, { tf-module-name = "vpc" }, { env = var.env })
 }
