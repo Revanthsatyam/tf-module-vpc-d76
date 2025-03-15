@@ -28,3 +28,12 @@ resource "aws_eip" "ngw" {
   count  = length(local.public_subnets)
   domain = "vpc"
 }
+
+# resource "aws_nat_gateway" "ngw" {
+#   count         = length(local.public_subnets)
+#   subnet_id     = element(local.public_subnets, count.index)
+#   allocation_id = element(aws_eip.ngw.*.id, count.index)
+#
+#   tags       = merge(local.tags, { Name = "${var.env}-ngw" })
+#   depends_on = [aws_internet_gateway.igw]
+# }
