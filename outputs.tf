@@ -1,3 +1,3 @@
 output "subnets" {
-  value = module.subnets
+  value = lookup(module.subnets, "app", null)
 }
