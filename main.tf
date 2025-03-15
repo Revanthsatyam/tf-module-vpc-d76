@@ -38,9 +38,9 @@ resource "aws_nat_gateway" "ngw" {
   depends_on = [aws_internet_gateway.igw]
 }
 
-resource "aws_route" "ngw" {
-  count                  = length(local.private_route_tables)
-  route_table_id         = element(local.private_route_tables, count.index)
-  destination_cidr_block = "0.0.0.0/0"
-  nat_gateway_id         = element(aws_nat_gateway.ngw.id, count.index)
-}
+# resource "aws_route" "ngw" {
+#   count                  = length(local.private_route_tables)
+#   route_table_id         = element(local.private_route_tables, count.index)
+#   destination_cidr_block = "0.0.0.0/0"
+#   nat_gateway_id         = element(aws_nat_gateway.ngw, count.index)
+# }
