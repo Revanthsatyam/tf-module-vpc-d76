@@ -34,9 +34,8 @@ resource "aws_nat_gateway" "ngw" {
   count         = length(local.public_subnets)
   subnet_id     = element(local.public_subnets, count.index)
   allocation_id = element(aws_eip.ngw.*.id, count.index)
-
-  tags       = merge(local.tags, { Name = "${var.env}-ngw" })
-  depends_on = [aws_internet_gateway.igw]
+  depends_on    = [aws_internet_gateway.igw]
+  tags          = merge(local.tags, { Name = "${var.env}-ngw" })
 }
 
 resource "aws_route" "ngw" {
@@ -47,8 +46,8 @@ resource "aws_route" "ngw" {
 }
 
 resource "aws_vpc_peering_connection" "peering" {
-  peer_vpc_id = var.default_vpc_id
-  vpc_id      = aws_vpc.main.id
+  peer_vpc_id = aws_vpc.main.id
+  vpc_id      = var.default_vpc_id
   auto_accept = true
   tags        = merge(local.tags, { Name = "${var.env}-vpc-peering" })
 }
