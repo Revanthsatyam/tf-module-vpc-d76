@@ -37,3 +37,10 @@ resource "aws_nat_gateway" "ngw" {
   tags       = merge(local.tags, { Name = "${var.env}-ngw" })
   depends_on = [aws_internet_gateway.igw]
 }
+
+resource "aws_route" "ngw" {
+  count                  = length(local.public_subnets)
+  route_table_id         = element(local.public_subnets, count.index)
+  destination_cidr_block = "0.0.0.0/0"
+  nat_gateway_id         = element(aws_nat_gateway.ngw.id, count.index)
+}
