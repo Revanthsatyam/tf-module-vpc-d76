@@ -17,3 +17,10 @@ resource "aws_internet_gateway" "igw" {
 
   tags = merge(local.tags, { Name = "${var.env}-igw" })
 }
+
+resource "aws_route" "igw" {
+  count                  = length(local.public_route_tables)
+  route_table_id         = element(local.public_route_tables, count.index)
+  destination_cidr_block = "0.0.0.0/0"
+  gateway_id             = aws_internet_gateway.igw.id
+}
